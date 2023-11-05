@@ -19,12 +19,13 @@ def device_info(request):
 
     #Una forma distinta para mostrarlo después en el template
     if is_touch:
-        is_touch = 'Sí es táctil'
+        is_touch = 'Sí'
     else:
-        is_touch = 'No es táctil'
+        is_touch = 'No'
 
     # Buscado en https://stackoverflow.com/questions/75374097/django-v4-request-metaremote-addr-not-working-anymore
     # Nos da la IP del host y cliente
+
     host_ip = request.META.get('SERVER_ADDR', 'Desconocida')
     client_ip = request.META.get('REMOTE_ADDR', 'Desconocida')
 
