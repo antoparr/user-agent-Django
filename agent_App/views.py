@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django_user_agents.utils import get_user_agent
 from django.shortcuts import render
+import socket
 
 def index(request):
     return render(request, 'index.html')
@@ -23,11 +24,14 @@ def device_info(request):
     else:
         is_touch = 'No'
 
-    # Buscado en https://stackoverflow.com/questions/75374097/django-v4-request-metaremote-addr-not-working-anymore
-    # Nos da la IP del host y cliente
+    # Buscado en: https://stackoverflow.com/questions/75374097/django-v4-request-metaremote-addr-not-working-anymore
+    # Nos da la IP del host
+    #No es la mejor manera
+    #    host_ip = request.META.get('SERVER_ADDR', 'Desconocida')
 
-    host_ip = request.META.get('SERVER_ADDR', 'Desconocida')
-    client_ip = request.META.get('REMOTE_ADDR', 'Desconocida')
+    #Mejor forma de hacerlo buscado en https://pythontic.com/modules/socket/gethostname
+    host_ip = socket.gethostbyname(socket.gethostname())
+    client_ip = request.META.get('REMOTE_ADDR')
 
     return render(request, 'device_info.html', {
         'is_mobile': is_mobile,
