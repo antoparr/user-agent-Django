@@ -10,17 +10,21 @@ def index(request):
     return render(request, 'index.html')
 
 def device_info(request):
+    #Casudísticas que se deben dar
     is_mobile = request.user_agent.is_mobile
     is_tablet = request.user_agent.is_tablet
     is_touch = request.user_agent.is_touch_capable
     is_pc = request.user_agent.is_pc
     is_bot = request.user_agent.is_bot
 
+    #Una forma distinta para mostrarlo después en el template
     if is_touch:
         is_touch = 'Sí es táctil'
     else:
         is_touch = 'No es táctil'
 
+    # Buscado en https://stackoverflow.com/questions/75374097/django-v4-request-metaremote-addr-not-working-anymore
+    # Nos da la IP del host y cliente
     host_ip = request.META.get('SERVER_ADDR', 'Desconocida')
     client_ip = request.META.get('REMOTE_ADDR', 'Desconocida')
 

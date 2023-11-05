@@ -3,10 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Información dispositivo</title>
+    <style>
+      body{
+            background-color: #E4C290;
+            padding-top: 18%;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <h3>Información de tu dispositivo</h3>
     {% load user_agents %}
+
+    <!-- Otra forma de mostrarlo en vez de ponerlo en las vistas -->
     {% if is_pc %}
     <p>Estás usando un PC</p>
     {% endif %}
@@ -19,6 +28,7 @@
     {% if is_bot %}
     <p>Eres un bot</p>
     {% endif %}
+    <!-- Otra forma de mostrarlo desde las vistas -->
     <p>¿Es táctil? {{ is_touch }}</p>
 
     <p>IP Host: {{ host_ip }}</p>
