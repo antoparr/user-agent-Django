@@ -2,9 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Información dispositivo</title>
 </head>
 <body>
+    <h3>Información de tu dispositivo</h3>
+    {% load user_agents %}
+    {% if is_pc %}
+    <p>Estás usando un PC</p>
+    {% endif %}
+    {% if is_mobile %}
+    <p>Estás usando un Móvil</p>
+    {% endif %}
+    {% if is_tablet %}
+    <p>Estás usando una Tablet</p>
+    {% endif %}
+    {% if is_bot %}
+    <p>Eres un bot</p>
+    {% endif %}
+    <p>¿Es táctil? {{ is_touch }}</p>
 
+    <p>IP Host: {{ host_ip }}</p>
+    <p>IP Cliente: {{ client_ip }}</p>
 </body>
 </html>

@@ -7,22 +7,22 @@ from django_user_agents.utils import get_user_agent
 from django.shortcuts import render
 
 def index(request):
-    return render(request, 'welcome.html')
-
-def user_agent_info(request):
-    user_agent = request.META['HTTP_USER_AGENT']
-    return render(request, 'user_agent_info.html', {'user_agent': user_agent})
+    return render(request, 'index.html')
 
 def device_info(request):
-    user_agent = request.META['HTTP_USER_AGENT']
-    is_mobile = 'Mobi' in user_agent
-    is_tablet = 'Tablet' in user_agent
-    is_pc = not (is_mobile or is_tablet)
-    is_bot = 'Bot' in user_agent
-    is_touch = request.META.get('HTTP_TOUCH', False)
+    is_mobile = request.user_agent.is_mobile
+    is_tablet = request.user_agent.is_tablet
+    is_touch = request.user_agent.is_touch_capable
+    is_pc = request.user_agent.is_pc
+    is_bot = request.user_agent.is_bot
 
-    client_host = request.get_host()
-    client_ip = request.META['REMOTE_ADDR']
+    if is_touch:
+        is_touch = 'Sí es táctil'
+    else:
+        is_touch = 'No es táctil'
+
+    host_ip = request.META.get('SERVER_ADDR', 'Desconocida')
+    client_ip = request.META.get('REMOTE_ADDR', 'Desconocida')
 
     return render(request, 'device_info.html', {
         'is_mobile': is_mobile,
@@ -30,6 +30,6 @@ def device_info(request):
         'is_pc': is_pc,
         'is_bot': is_bot,
         'is_touch': is_touch,
-        'client_host': client_host,
+        'host_ip': host_ip,
         'client_ip': client_ip,
     })
